@@ -20,6 +20,6 @@ group :test do
 end
 
 group :test, :development do
-  gem 'pry-rails'
-  gem 'netzke-testing'
+  #gem 'pry-rails'
+  #gem 'netzke-testing'
 end

@@ -333,9 +333,17 @@ module Netzke::Basepack::DataAdapters
         and_query.each do |q|
           if prok = q.delete(:proc)
             relation = prok.call(relation, q[:value], q[:operator])
+            #added the following back, the idea here is to remove any filter params
+            #that has a proc or lambda type query, this is to prevent those parameters
+            #from fabricating another erronous query that overides this proc query later on in
+            #the line below:
+            #             relation = relation.where(predicates_for_and_conditions(and_query)
+            #now and_query.delete_if{|q| q[:proc] } should be able to take care of this
+            #but for some strange reason on multiple lambda filters it does not
             and_query.delete(q)
           end
-        end
+
+          and_query.delete_if{|q| q[:proc] }
 
         # apply other, non-Proc filters
         relation = relation.where(predicates_for_and_conditions(and_query))
