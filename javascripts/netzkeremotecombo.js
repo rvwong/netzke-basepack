@@ -29,6 +29,12 @@ Ext.define('Ext.netzke.ComboBox', {
       }
     });
 
+    this.on('expand',function(field, eOpts) {
+      // parentSelectedRecordId = Ext.ComponentManager.get(this.parentId).view.getSelectionModel().getLastSelected().data['id'];
+      // Netzke.providers[this.parentId].getComboboxOptions({attr: 'xxx', id: parentSelectedRecordId});
+      this.store.load();
+    });
+
     store.on('beforeload', function(self, params) {
       params.params.attr = this.name;
     },this);
