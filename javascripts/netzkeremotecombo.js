@@ -36,6 +36,7 @@ Ext.define('Ext.netzke.ComboBox', {
     });
 
     store.on('beforeload', function(self, params) {
+      if(params.params == null) params.params = {};
       params.params.attr = this.name;
     },this);
 
